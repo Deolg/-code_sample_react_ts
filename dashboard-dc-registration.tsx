@@ -1,16 +1,10 @@
 import React from 'react';
-import { connect } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 
 import { LeftMenuIndices } from 'constants/menus';
 import { DASHBOARD_LISTINGS_ROUTE } from 'constants/routes';
 
-import { RootStore } from 'store/store.reducer';
 import { DCRegistrationPageNum } from 'store/store.types';
-import {
-    DCRegistrationActionType,
-    dcRegistrationSetCurrPage,
-} from 'store/store.actions';
 
 import { DashboardBase } from 'base-pages/dashboard-base';
 import {
@@ -33,107 +27,172 @@ import { Page8 } from './pages/page-8';
 import { Page9 } from './pages/page-9';
 
 import { ReactComponent as ArrowRight } from 'images/ArrowRight.svg';
+import { usePages } from './hooks/usePages';
 
-export interface IDCRegistrationPageProps {
-    currPage: DCRegistrationPageNum;
-    dcRegistrationSetCurrPage: (
-        currPage: DCRegistrationPageNum
-    ) => DCRegistrationActionType;
-}
+const registrationTitlesList = [
+    'Data Center registration',
+    'Data Center registration',
+    'Data Center registration',
+    'Data Center registration',
+    'Data Center registration',
+    'Data Center registration',
+    'Data Center registration',
+    'Data Center registration',
+    'Data Center registration',
+];
 
-const DCRegistrationPageComponent = (props: IDCRegistrationPageProps) => {
+const pagesList = [
+    <Page1 />,
+    <Page2 />,
+    <Page3 />,
+    <Page4 />,
+    <Page5 />,
+    <Page6 />,
+    <Page7 />,
+    <Page8 />,
+    <Page9 />,
+];
+
+export const DCRegistrationPage = () => {
     const history = useHistory();
+    const [state, api] = usePages();
 
     const handleBack = () => {
-        if (props.currPage === DCRegistrationPageNum.Page1) {
+        if (state.currPage === DCRegistrationPageNum.Page1) {
             history.push(DASHBOARD_LISTINGS_ROUTE);
         } else {
-            props.dcRegistrationSetCurrPage(props.currPage - 1);
+            api.dcSetCurrPage(state.currPage - 1);
         }
     };
 
-    const titlesList = [
-        'Data Center registration',
-        'Data Center registration',
-        'Data Center registration',
-        'Data Center registration',
-        'Data Center registration',
-        'Data Center registration',
-        'Data Center registration',
-        'Data Center registration',
-        'Data Center registration',
-    ];
-
-    const pagesList = [
-        <Page1 />,
-        <Page2 />,
-        <Page3 />,
-        <Page4 />,
-        <Page5 />,
-        <Page6 />,
-        <Page7 />,
-        <Page8 />,
-        <Page9 />,
-    ];
     const stepCounter = (stepPosition: number) => {
-        if (stepPosition - 1 === props.currPage) {
+        if (stepPosition - 1 === state.currPage) {
             return 'active';
         }
-        if (stepPosition - 1 < props.currPage) {
+        if (stepPosition - 1 < state.currPage) {
             return 'done';
         }
-        if (stepPosition - 1 === props.currPage + 1) {
+        if (stepPosition - 1 === state.currPage + 1) {
             return 'next';
         }
         return '';
     };
+
+    const title =
+        state.mode === 'registration'
+            ? registrationTitlesList[state.currPage]
+            : 'Data Center Edit';
+
     return (
         <DashboardBase
-            title={titlesList[props.currPage]}
+            title={title}
             currMenuIndex={LeftMenuIndices.Listings}
             onBack={handleBack}
         >
-            <StepperWrapper page={props.currPage}>
-                <Step stepState={stepCounter(1)}>
+            <StepperWrapper page={state.currPage}>
+                <Step
+                    stepState={stepCounter(1)}
+                    cursor={state.mode === 'edit'}
+                    onClick={() =>
+                        state.mode === 'edit' &&
+                        api.dcSetCurrPage(DCRegistrationPageNum.Page1)
+                    }
+                >
                     Basic Info
                     <SmallCircle />{' '}
                 </Step>
-                <Step stepState={stepCounter(2)}>
+                <Step
+                    stepState={stepCounter(2)}
+                    cursor={state.mode === 'edit'}
+                    onClick={() =>
+                        state.mode === 'edit' &&
+                        api.dcSetCurrPage(DCRegistrationPageNum.Page2)
+                    }
+                >
                     Photos & Videos
                     <SmallCircle />
                 </Step>
-                <Step stepState={stepCounter(3)}>
+                <Step
+                    stepState={stepCounter(3)}
+                    cursor={state.mode === 'edit'}
+                    onClick={() =>
+                        state.mode === 'edit' &&
+                        api.dcSetCurrPage(DCRegistrationPageNum.Page3)
+                    }
+                >
                     Availability
                     <SmallCircle />
                 </Step>
-                <Step stepState={stepCounter(4)}>
+                <Step
+                    stepState={stepCounter(4)}
+                    cursor={state.mode === 'edit'}
+                    onClick={() =>
+                        state.mode === 'edit' &&
+                        api.dcSetCurrPage(DCRegistrationPageNum.Page4)
+                    }
+                >
                     Facility
                     <SmallCircle />
                 </Step>
-                <Step stepState={stepCounter(5)}>
+                <Step
+                    stepState={stepCounter(5)}
+                    cursor={state.mode === 'edit'}
+                    onClick={() =>
+                        state.mode === 'edit' &&
+                        api.dcSetCurrPage(DCRegistrationPageNum.Page5)
+                    }
+                >
                     Power Capacity
                     <SmallCircle />
                 </Step>
-                <Step stepState={stepCounter(6)}>
+                <Step
+                    stepState={stepCounter(6)}
+                    cursor={state.mode === 'edit'}
+                    onClick={() =>
+                        state.mode === 'edit' &&
+                        api.dcSetCurrPage(DCRegistrationPageNum.Page6)
+                    }
+                >
                     Security
                     <SmallCircle />
                 </Step>
-                <Step stepState={stepCounter(7)}>
+                <Step
+                    stepState={stepCounter(7)}
+                    cursor={state.mode === 'edit'}
+                    onClick={() =>
+                        state.mode === 'edit' &&
+                        api.dcSetCurrPage(DCRegistrationPageNum.Page7)
+                    }
+                >
                     Other
                     <SmallCircle />
                 </Step>
-                <Step stepState={stepCounter(8)}>
+                <Step
+                    stepState={stepCounter(8)}
+                    cursor={state.mode === 'edit'}
+                    onClick={() =>
+                        state.mode === 'edit' &&
+                        api.dcSetCurrPage(DCRegistrationPageNum.Page8)
+                    }
+                >
                     Lease Conditions
                     <SmallCircle />
                 </Step>
-                <Step stepState={stepCounter(9)}>
+                <Step
+                    stepState={stepCounter(9)}
+                    cursor={state.mode === 'edit'}
+                    onClick={() =>
+                        state.mode === 'edit' &&
+                        api.dcSetCurrPage(DCRegistrationPageNum.Page9)
+                    }
+                >
                     Pricing
                     <SmallCircle />
                 </Step>
             </StepperWrapper>
-            {pagesList[props.currPage]}
+            {pagesList[state.currPage]}
             <PageNumberBox>
-                <PageNumberBody>{props.currPage + 1} of 9</PageNumberBody>
+                <PageNumberBody>{state.currPage + 1} of 9</PageNumberBody>
                 <PageNumberArrowBox>
                     <ArrowRight />
                 </PageNumberArrowBox>
@@ -141,16 +200,3 @@ const DCRegistrationPageComponent = (props: IDCRegistrationPageProps) => {
         </DashboardBase>
     );
 };
-
-const mapStateToProps = (state: RootStore) => ({
-    currPage: state.dcRegistration.currPage,
-});
-
-const dispatchProps = {
-    dcRegistrationSetCurrPage,
-};
-
-export const DCRegistrationPage = connect(
-    mapStateToProps,
-    dispatchProps
-)(DCRegistrationPageComponent);

@@ -37,7 +37,7 @@ export const PageNumberArrowBox = styled.div`
 
 export const CenterPageOuter = styled.div`
     width: 100%;
-
+    height: 100%;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -441,7 +441,7 @@ export const Slide = styled.div`
     box-sizing: border-box;
     border-radius: 5px;
     margin: 10px 10px 0 0;
-    
+
     &:hover {
         border-color: #4a90e2;
     }
@@ -764,11 +764,12 @@ export const StepperWrapper = styled.div<{ page?: number }>`
     border-color: ${props => (props.page === 8 ? '#4A90E2' : '#c4c4c4')};
     border-top: 1px solid #c4c4c4;
 `;
-export const Step = styled.div<{ stepState?: string }>`
+export const Step = styled.div<{ stepState?: string; cursor: boolean }>`
     padding: 15px 15px;
     font-weight: 500;
     font-size: 17px;
     line-height: 23px;
+    cursor: ${props => (props.cursor ? 'pointer' : 'auto')}
     color: ${props =>
         props.stepState === 'done'
             ? '#0FB269'
@@ -848,4 +849,18 @@ export const SlideCloseBtn = styled.button`
     background-size: 100% 100%;
     background-position: center;
     cursor: pointer;
+`;
+
+export const LoadingBody = styled.div`
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-grow: 2;
+    left: 0;
+    right: 0;
+`;
+
+export const StyledButtonsBlock = styled.div`
+    display: flex;
+    flex-direction: column;
 `;
